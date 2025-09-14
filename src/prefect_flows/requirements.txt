@@ -1,0 +1,10 @@
+# Prefect core
+prefect==2.14.2
+
+# Data processing (duplicate from main for clarity)
+pandas==2.0.3
+pyarrow==13.0.0
+numpy==1.24.3
+
+# Optional: for potential ML steps later
+scikit-learn==1.3.2

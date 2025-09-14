@@ -1,0 +1,22 @@
+# .gitignore
+# Virtual environment
+.venv/
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Environment variables
+.env
+.env.local
+
+# Data files (ignore all except samples)
+data/*.csv
+data/*.parquet
+!data/sample_data.csv
+
+# IDE
+.vscode/
+.idea/
