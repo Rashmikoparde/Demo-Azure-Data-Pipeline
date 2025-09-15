@@ -12,10 +12,10 @@ __pycache__/
 .env
 .env.local
 
-# Data files (ignore all except samples)
+# Data files (ignore all except data)
 data/*.csv
 data/*.parquet
-!data/sample_data.csv
+!data/raw/data.csv
 
 # IDE
 .vscode/

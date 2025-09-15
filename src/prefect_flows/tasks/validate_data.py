@@ -1,6 +1,14 @@
 # src/prefect_flows/tasks/validate_data.py
 from prefect import task
 import pandas as pd
+import sys
+import os
+
+# Add current directory to Python path
+current_dir = os.path.dirname(os.path.abspath(__file__))
+if current_dir not in sys.path:
+    sys.path.append(current_dir)
+
 
 @task
 def validate_data(df: pd.DataFrame, config: dict):

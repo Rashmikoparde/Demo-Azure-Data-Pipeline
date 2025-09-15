@@ -1,4 +1,12 @@
 # src/prefect_flows/tasks/get_config.py
+import sys
+import os
+
+# Add the src directory to Python path
+src_path = os.path.join(os.path.dirname(__file__), '..', '..')
+if src_path not in sys.path:
+    sys.path.append(src_path)
+
 from prefect import task
 
 @task

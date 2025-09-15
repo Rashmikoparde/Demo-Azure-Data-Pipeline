@@ -1,5 +1,13 @@
 # src/prefect_flows/tasks/cleanse_data.py
-from prefect import task
+
+import sys
+import os
+from prefect import flow, get_run_logger, task
+
+# Add the src directory to Python path
+src_path = os.path.join(os.path.dirname(__file__), '..', '..')
+if src_path not in sys.path:
+    sys.path.append(src_path)
 import pandas as pd
 
 @task
