@@ -1,4 +1,3 @@
-# setup_great_expectations.py
 import os
 import json
 import shutil

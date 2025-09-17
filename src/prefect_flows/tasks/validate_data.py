@@ -1,4 +1,3 @@
-# src/prefect_flows/tasks/validate_data.py
 from prefect import task
 import pandas as pd
 import great_expectations as ge
@@ -36,7 +35,7 @@ def create_expectation_suite(config: dict) -> ExpectationSuite:
     
     expectations = []
     
-    # 1. Column existence expectations
+    # Column existence expectations
     for column in config.get('required_columns', []):
         expectations.append(
             ExpectationConfiguration(
@@ -45,7 +44,7 @@ def create_expectation_suite(config: dict) -> ExpectationSuite:
             )
         )
     
-    # 2. Data type expectations
+    # Data type expectations
     type_expectations = {
         'footfall': 'int64',
         'tempMode': 'int64',
@@ -67,7 +66,7 @@ def create_expectation_suite(config: dict) -> ExpectationSuite:
             )
         )
     
-    # 3. Value range expectations
+    # Value range expectations
     valid_ranges = config.get('valid_ranges', {})
     for column, ranges in valid_ranges.items():
         expectations.append(
@@ -81,7 +80,7 @@ def create_expectation_suite(config: dict) -> ExpectationSuite:
             )
         )
     
-    # 4. Non-null expectations
+    # Non-null expectations
     for column in config.get('required_columns', []):
         expectations.append(
             ExpectationConfiguration(
@@ -90,7 +89,7 @@ def create_expectation_suite(config: dict) -> ExpectationSuite:
             )
         )
     
-    # 5. Unique identifier expectations
+    # Unique identifier expectations
     expectations.append(
         ExpectationConfiguration(
             expectation_type="expect_column_to_exist",
@@ -105,7 +104,7 @@ def create_expectation_suite(config: dict) -> ExpectationSuite:
         )
     )
     
-    # 6. Categorical value expectations
+    # Categorical value expectations
     categorical_values = config.get('categorical_columns', {})
     for column, allowed_values in categorical_values.items():
         expectations.append(
@@ -115,7 +114,7 @@ def create_expectation_suite(config: dict) -> ExpectationSuite:
             )
         )
     
-    # 7. Statistical expectations
+    # Statistical expectations
     expectations.append(
         ExpectationConfiguration(
             expectation_type="expect_column_mean_to_be_between",
@@ -191,7 +190,6 @@ def calculate_data_quality_score(validation_results: dict, df: pd.DataFrame) -> 
             elif "unique" in expectation_type:
                 critical_penalty += 5   # Moderate penalty for uniqueness issues
     
-    # Bonus for large datasets
     size_bonus = min(len(df) / 1000, 5)  # Up to 5 points for large datasets
     
     final_score = max(0, base_score - critical_penalty + size_bonus)

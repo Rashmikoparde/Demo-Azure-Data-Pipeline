@@ -1,4 +1,3 @@
-# src/prefect_flows/tasks/get_config.py
 import sys
 import os
 
@@ -9,16 +8,6 @@ if src_path not in sys.path:
 
 from prefect import task
 import os
-
-# Detect if running in Docker
-IS_DOCKER = os.path.exists('/.dockerenv')
-
-if IS_DOCKER:
-    print("Running in Docker container")
-    # Adjust paths if needed
-    DATA_PATH = "/app/data"
-else:
-    DATA_PATH = "./data"
 
 @task
 def get_config():

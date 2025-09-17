@@ -1,4 +1,3 @@
-# src/prefect_flows/tasks/extract_metadata.py
 from prefect import task
 import pandas as pd
 import os
@@ -10,8 +9,8 @@ def extract_metadata(df: pd.DataFrame, file_path: str):
     file_name = os.path.basename(file_path)
     
     metadata = {
-        "file_name": file_name,  # Store only filename, not full path
-        "file_path": file_path,  # Store full path separately if needed
+        "file_name": file_name,  
+        "file_path": file_path, 
         "row_count": len(df),
         "column_count": len(df.columns),
         "column_names": list(df.columns),
