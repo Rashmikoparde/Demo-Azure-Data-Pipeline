@@ -10,7 +10,7 @@
 - **Error Handling**: Robust exception handling and logging
 - **Modular Design**: Separated tasks for maintainability
 
-## 🏆 Skills Demonstrated
+## Skills Demonstrated
 
 - Python Data Engineering
 - Prefect Workflow Orchestration
