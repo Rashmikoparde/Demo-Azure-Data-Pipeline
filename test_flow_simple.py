@@ -10,14 +10,14 @@ if current_dir not in sys.path:
 try:
     # Import the flow directly
     from src.prefect_flows.flows.data_ingestion_flow import data_ingestion_flow
-    print("✅ Successfully imported flow")
+    print("Successfully imported flow")
     
-    # Test the flow
+    # Test the flow     
     result = data_ingestion_flow("./data/raw/data.csv")
-    print(f"Flow result: {result}")
+    #print(f"Flow result: {result}")
     
 except ImportError as e:
-    print(f"❌ Import failed: {e}")
+    print(f"Import failed: {e}")
     print("Trying alternative import method...")
     
     # Alternative: import by file path

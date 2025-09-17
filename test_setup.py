@@ -20,4 +20,4 @@ print(df)
 result = test_flow()
 print(f"Flow result: {result}")
 
-print("✅ All tests passed! Environment is ready.")
+print("All tests passed! Environment is ready.")

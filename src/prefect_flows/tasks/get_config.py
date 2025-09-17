@@ -8,6 +8,17 @@ if src_path not in sys.path:
     sys.path.append(src_path)
 
 from prefect import task
+import os
+
+# Detect if running in Docker
+IS_DOCKER = os.path.exists('/.dockerenv')
+
+if IS_DOCKER:
+    print("Running in Docker container")
+    # Adjust paths if needed
+    DATA_PATH = "/app/data"
+else:
+    DATA_PATH = "./data"
 
 @task
 def get_config():

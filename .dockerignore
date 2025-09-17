@@ -1,0 +1,35 @@
+# Python
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+venv/
+.venv/
+env/
+
+# Data
+data/*.csv
+data/*.parquet
+!data/sample_data.csv
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Docker
+Dockerfile
+.dockerignore
+
+# Logs
+logs/
+*.log
+
+# Great Expectations (if not needed in production)
+great_expectations/uncommitted/

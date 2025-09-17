@@ -13,9 +13,9 @@ if project_root not in sys.path:
 
 try:
     from src.prefect_flows.flows.data_ingestion_flow import data_ingestion_flow
-    print("✅ Successfully imported data_ingestion_flow")
+    print("Successfully imported data_ingestion_flow")
 except ImportError as e:
-    print(f"❌ Import error: {e}")
+    print(f"Import error: {e}")
     # Create a mock function for testing
     def data_ingestion_flow(file_path):
         return {"status": "success", "output_path": f"processed_{file_path}"}
@@ -67,10 +67,10 @@ async def upload_file(file: UploadFile = File(...)):
         with open(file_location, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
         
-        print(f"📥 File saved: {file_location}")
+        print(f"File saved: {file_location}")
         
         # Trigger processing
-        print("🔄 Starting data processing...")
+        print("Starting data processing...")
         result = data_ingestion_flow(file_location)
         
         response_data = {
@@ -84,7 +84,7 @@ async def upload_file(file: UploadFile = File(...)):
         
     except Exception as e:
         error_msg = f"Error processing file: {str(e)}"
-        print(f"❌ {error_msg}")
+        print(f"{error_msg}")
         raise HTTPException(status_code=500, detail=error_msg)
 
 @app.get("/health")
@@ -94,8 +94,8 @@ async def health_check():
 
 def run_server(host: str = "127.0.0.1", port: int = 8000):
     """Run the web server."""
-    print(f"🌐 Starting web server at http://{host}:{port}")
-    print("📋 Open http://127.0.0.1:8000 in your browser")
+    print(f"Starting web server at http://{host}:{port}")
+    print("Open http://127.0.0.1:8000 in your browser")
     uvicorn.run(app, host=host, port=port)
 
 if __name__ == "__main__":

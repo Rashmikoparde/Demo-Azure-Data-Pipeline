@@ -17,6 +17,15 @@ def cleanse_data(df: pd.DataFrame):
     
     # Make a copy to avoid modifying the original
     df_clean = df.copy()
+
+    # Strip column names (accidental spaces, etc.)
+    df_clean.columns = df_clean.columns.str.strip()
+
+    # Drop duplicates
+    initial_len = len(df_clean)
+    df_clean.drop_duplicates(inplace=True)
+    print(f"Removed {initial_len - len(df_clean)} duplicate rows")
+
     
     # Handle missing values - fill with mean for numeric columns
     numeric_cols = df_clean.select_dtypes(include=['number']).columns

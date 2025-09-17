@@ -17,23 +17,23 @@ class NewFileHandler(FileSystemEventHandler):
     
     def on_created(self, event):
         if not event.is_directory and event.src_path.endswith('.csv'):
-            print(f"\n🔔 New file detected: {event.src_path}")
+            print(f"\nNew file detected: {event.src_path}")
             print("Starting data ingestion flow...")
             
             # Run the Prefect flow
             result = data_ingestion_flow(event.src_path)
             
             if result['status'] == 'success':
-                print(f"✅ Processing completed: {result['output_path']}")
+                print(f"Processing completed: {result['output_path']}")
             else:
-                print(f"❌ Processing failed: {result['error']}")
+                print(f"Processing failed: {result['error']}")
 
 def start_folder_watcher(watch_path: str = "./data/raw"):
     """Start watching a folder for new files."""
     # Create the directory if it doesn't exist
     os.makedirs(watch_path, exist_ok=True)
     
-    print(f"👀 Watching folder for new CSV files: {os.path.abspath(watch_path)}")
+    print(f"Watching folder for new CSV files: {os.path.abspath(watch_path)}")
     print("Drop CSV files in this folder to trigger processing...")
     print("Press Ctrl+C to stop watching")
     
