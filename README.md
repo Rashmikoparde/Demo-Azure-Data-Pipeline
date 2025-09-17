@@ -1,7 +1,8 @@
 # Industrial IoT Data Pipeline with Cloud-Native Architecture Simulation
 A complete data ingestion and processing pipeline that simulates cloud infrastructure using local tools. Processes industrial sensor data for predictive maintenance analytics with automated validation, cleansing, and orchestration.
 
-![Data Pipeline](docs\DataPipeline.png)
+## Flowchart
+![Data Pipeline](docs/DataPipeline.png)
 
 ## ☁️ Cloud Architecture Simulation
 
