@@ -1,6 +1,8 @@
 import sys
 import os
 from prefect import flow, get_run_logger
+from src.prefect_flows.tasks.Validate import validate_sensor_data, save_validation_report
+from src.prefect_flows.tasks.save_data import save_data
 
 # Add the src directory to Python path
 src_path = os.path.join(os.path.dirname(__file__), '..', '..')
@@ -12,7 +14,6 @@ from src.prefect_flows.tasks.get_config import get_config
 from src.prefect_flows.tasks.load_data import load_data
 from src.prefect_flows.tasks.extract_metadata import extract_metadata
 from src.prefect_flows.tasks.cleanse_data import cleanse_data
-from src.prefect_flows.tasks.validate_data import validate_data_with_great_expectations
 from src.prefect_flows.tasks.save_data import save_data
 
 @flow(name="sensor-data-ingestion-flow")
@@ -26,33 +27,37 @@ def data_ingestion_flow(file_path: str):
         logger.info("Step 1: Loading configuration...")
         config = get_config()
         
-        # Load raw data
-        logger.info("Step 2: Loading raw data...")
-        raw_df = load_data(file_path)
-
         # Extract metadata
-        logger.info("Step 3: Extracting metadata...")
+        logger.info("Step 3: Saving raw data and metadata to raw folder...")
         # In the data_ingestion_flow function, update the metadata extraction call:
-        metadata = extract_metadata(raw_df, file_path)  # Pass the full file_path
+        metadata, raw_file_path = extract_metadata(file_path, raw_folder="./data/raw")  # Pass the full file_path
         
         # Cleanse data
         logger.info("Step 4: Cleansing data...")
-        cleansed_df = cleanse_data(raw_df)
-        
+        df = cleanse_data(raw_file_path, config)
+                
         # Validate data
-        logger.info("Step 5: Validating data...")
-        validation_results = validate_data_with_great_expectations(cleansed_df, config)
+
+        logger.info("Step : Validating data...")
+        validation_results = validate_sensor_data(df)
         
+        logger.info("Step 4: Saving validation report...")
+        report_path = save_validation_report(validation_results, file_path)
+        logger.info(f"Validation successfully completed! Output: {report_path}")
         
-        # Save processed data
-        logger.info("Step 6: Saving processed data...")
-        output_path = save_data(cleansed_df, metadata)
-        
-        logger.info(f"Data ingestion completed successfully! Output: {output_path}")
+        # 5. Save processed data only if validation passes
+        if validation_results["success"]:
+            logger.info("Step 5: Saving processed data...")
+            processed_path = save_data(df, metadata)
+        else:
+            processed_path = None
+            logger.warning("Validation failed - data not promoted to processed folder")
+
+        logger.info(f"Data ingestion completed successfully! Output: {processed_path}")
         
         return {
             "status": "success",
-            "output_path": output_path,
+            "output_path": processed_path,
             "metadata": metadata,
             "validation": validation_results
         }

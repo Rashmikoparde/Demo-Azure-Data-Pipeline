@@ -1,0 +1,23 @@
+{
+  "file_name": "data_30.csv",
+  "file_info": {
+    "file_size_bytes": 22511,
+    "saved_path": "./data/raw\\data_30.csv"
+  },
+  "data_structure": {
+    "row_count": 944,
+    "column_count": 10,
+    "columns": [
+      "footfall",
+      "tempMode",
+      "AQ",
+      "USS",
+      "CS",
+      "VOC",
+      "RP",
+      "IP",
+      "Temperature",
+      "fail"
+    ]
+  }
+}

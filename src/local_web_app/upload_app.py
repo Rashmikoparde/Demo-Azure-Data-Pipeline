@@ -1,4 +1,3 @@
-# src/local_web_app/upload_app.py
 import sys
 import os
 from fastapi import FastAPI, File, UploadFile, HTTPException
@@ -11,14 +10,14 @@ project_root = os.path.join(os.path.dirname(__file__), '..', '..')
 if project_root not in sys.path:
     sys.path.append(project_root)
 
-try:
-    from src.prefect_flows.flows.data_ingestion_flow import data_ingestion_flow
-    print("Successfully imported data_ingestion_flow")
-except ImportError as e:
-    print(f"Import error: {e}")
+#try:
+ #   from src.prefect_flows.flows.data_ingestion_flow import data_ingestion_flow
+ #   print("Successfully imported data_ingestion_flow")
+#except ImportError as e:
+ #   print(f"Import error: {e}")
     # Create a mock function for testing
-    def data_ingestion_flow(file_path):
-        return {"status": "success", "output_path": f"processed_{file_path}"}
+  #  def data_ingestion_flow(file_path):
+   #     return {"status": "success", "output_path": f"processed_{file_path}"}
 
 app = FastAPI(title="Sensor Data Upload API", debug=True)
 
@@ -63,21 +62,20 @@ async def upload_file(file: UploadFile = File(...)):
     
     try:
         # Save file to raw directory
-        file_location = f"./data/raw/{file.filename}"
+        file_location = f"./data/landing/{file.filename}"
         with open(file_location, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
         
         print(f"File saved: {file_location}")
         
         # Trigger processing
-        print("Starting data processing...")
-        result = data_ingestion_flow(file_location)
+        #print("Starting data processing...")
+        #result = data_ingestion_flow(file_location)
         
         response_data = {
             "filename": file.filename,
             "saved_location": file_location,
-            "processing_result": result,
-            "message": "File uploaded and processed successfully" if result['status'] == 'success' else "Processing failed"
+            "message": "File uploaded successfully to landing zone. Watchdog will trigger processing automatically."
         }
         
         return JSONResponse(content=response_data)

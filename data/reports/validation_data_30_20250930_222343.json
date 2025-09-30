@@ -1,0 +1,111 @@
+{
+  "validation_report": {
+    "timestamp": "2025-09-30T22:23:43.838665",
+    "file_validated": "data_30.csv",
+    "overall_status": "FAIL",
+    "summary": {
+      "total_rows": 943,
+      "valid_rows": 781,
+      "invalid_rows": 162,
+      "valid_percentage": 82.82078472958642
+    },
+    "errors": [
+      "Column 'tempMode' has invalid values: [0]. Allowed: [1, 2, 3, 4, 5, 6, 7]"
+    ],
+    "warnings": [],
+    "column_statistics": {
+      "footfall": {
+        "total_count": 943,
+        "null_count": 0,
+        "invalid_count": 0,
+        "min_value": 0,
+        "max_value": 7300,
+        "unique_values": null
+      },
+      "tempMode": {
+        "total_count": 943,
+        "null_count": 0,
+        "invalid_count": 161,
+        "min_value": null,
+        "max_value": null,
+        "unique_values": [
+          7,
+          1,
+          4,
+          3,
+          0,
+          5,
+          2,
+          6
+        ]
+      },
+      "AQ": {
+        "total_count": 943,
+        "null_count": 0,
+        "invalid_count": 0,
+        "min_value": 1,
+        "max_value": 7,
+        "unique_values": null
+      },
+      "USS": {
+        "total_count": 943,
+        "null_count": 0,
+        "invalid_count": 0,
+        "min_value": 1,
+        "max_value": 7,
+        "unique_values": null
+      },
+      "CS": {
+        "total_count": 943,
+        "null_count": 0,
+        "invalid_count": 0,
+        "min_value": 1,
+        "max_value": 7,
+        "unique_values": null
+      },
+      "VOC": {
+        "total_count": 943,
+        "null_count": 0,
+        "invalid_count": 0,
+        "min_value": 0,
+        "max_value": 6,
+        "unique_values": null
+      },
+      "RP": {
+        "total_count": 943,
+        "null_count": 0,
+        "invalid_count": 0,
+        "min_value": 19,
+        "max_value": 91,
+        "unique_values": null
+      },
+      "IP": {
+        "total_count": 943,
+        "null_count": 0,
+        "invalid_count": 0,
+        "min_value": 1,
+        "max_value": 7,
+        "unique_values": null
+      },
+      "Temperature": {
+        "total_count": 943,
+        "null_count": 0,
+        "invalid_count": 0,
+        "min_value": 1,
+        "max_value": 24,
+        "unique_values": null
+      },
+      "fail": {
+        "total_count": 943,
+        "null_count": 0,
+        "invalid_count": 0,
+        "min_value": null,
+        "max_value": null,
+        "unique_values": [
+          1,
+          0
+        ]
+      }
+    }
+  }
+}

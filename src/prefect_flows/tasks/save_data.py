@@ -9,7 +9,7 @@ def save_data(df: pd.DataFrame, metadata: dict, output_dir: str = "data/cleansed
     os.makedirs(output_dir, exist_ok=True)
     
     # Generate output filename - use the original filename but change extension
-    input_filename = os.path.basename(metadata['file_name'])
+    input_filename = metadata['file_name']
     base_filename = input_filename.replace('.csv', '')
     output_filename = f"{base_filename}_processed.parquet"
     output_path = os.path.join(output_dir, output_filename)

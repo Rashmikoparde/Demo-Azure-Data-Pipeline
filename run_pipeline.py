@@ -1,30 +1,47 @@
-import sys
+# run_simple.py
 import os
+import time
+import uvicorn
+from watchdog.observers import Observer
+from src.triggers.folder_watcher import NewFileHandler
+from src.local_web_app.upload_app import app
 
-# Add the current directory to Python path
-sys.path.append(os.path.dirname(__file__))
-
-def run_folder_watcher():
-    """Run the folder watcher."""
-    from src.triggers.folder_watcher import start_folder_watcher
-    start_folder_watcher()
-
-def run_web_app():
-    """Run the web upload app."""
-    from src.local_web_app.upload_app import app
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+def run_simple_pipeline():
+    """Simple sequential pipeline runner with both components."""
+    print("🚀 Starting Simple Sensor Data Pipeline")
+    print("=" * 50)
+    
+    # Setup
+    directories = ["./data/landing", "./data/raw"]
+    for directory in directories:
+        os.makedirs(directory, exist_ok=True)
+        print(f"✅ Created: {directory}")
+    
+    # Start folder watcher
+    print("👀 Starting folder watcher...")
+    watch_path = "./data/landing"
+    event_handler = NewFileHandler()
+    observer = Observer()
+    observer.schedule(event_handler, watch_path, recursive=False)
+    observer.start()
+    print(f"✅ Folder watcher started on: {os.path.abspath(watch_path)}")
+    
+    print("\n🔧 Starting upload app...")
+    print(" Upload app: http://127.0.0.1:8000")
+    print(" Folder watcher: Active on ./data/landing/")
+    print("\nPress Ctrl+C to stop")
+    
+    try:
+        # Run upload app (this blocks - keeps the watcher running)
+        uvicorn.run(app, host="127.0.0.1", port=8000)
+    except KeyboardInterrupt:
+        print("\n Stopping pipeline...")
+    finally:
+        # Clean up folder watcher
+        observer.stop()
+        observer.join()
+        print("✅ Folder watcher stopped")
+        print("🎯 Pipeline shutdown complete")
 
 if __name__ == "__main__":
-    print("Choose an option:")
-    print("1. Run Folder Watcher (simulates Azure Function)")
-    print("2. Run Web Upload App")
-    
-    choice = input("Enter choice (1 or 2): ").strip()
-    
-    if choice == "1":
-        run_folder_watcher()
-    elif choice == "2":
-        run_web_app()
-    else:
-        print("Invalid choice. Please run again.")
+    run_simple_pipeline()

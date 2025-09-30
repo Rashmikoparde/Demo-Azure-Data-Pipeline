@@ -280,9 +280,9 @@ def generate_html_report(validation_results: dict):
     print(f"HTML validation report saved: {report_path}")
 
 @task
-def validate_data_with_great_expectations(df: pd.DataFrame, config: dict):
+def validate_data_with_great_expectations(cleansed_file_path, config: dict):
     """Alternative: Use Great Expectations with data context."""
-    
+    df = pd.read_csv(cleansed_file_path)
     try:
         # Initialize Great Expectations context
         context = ge.data_context.DataContext()

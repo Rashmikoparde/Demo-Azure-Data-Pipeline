@@ -9,7 +9,6 @@ from watchdog.events import FileSystemEventHandler
 project_root = os.path.join(os.path.dirname(__file__), '..', '..')
 sys.path.append(project_root)
 
-# Now import your modules
 from src.prefect_flows.flows.data_ingestion_flow import data_ingestion_flow
 
 class NewFileHandler(FileSystemEventHandler):
@@ -28,7 +27,7 @@ class NewFileHandler(FileSystemEventHandler):
             else:
                 print(f"Processing failed: {result['error']}")
 
-def start_folder_watcher(watch_path: str = "./data/raw"):
+def start_folder_watcher(watch_path: str = "./data/landing"):
     """Start watching a folder for new files."""
     # Create the directory if it doesn't exist
     os.makedirs(watch_path, exist_ok=True)
@@ -37,6 +36,7 @@ def start_folder_watcher(watch_path: str = "./data/raw"):
     print("Drop CSV files in this folder to trigger processing...")
     print("Press Ctrl+C to stop watching")
     
+
     event_handler = NewFileHandler()
     observer = Observer()
     observer.schedule(event_handler, watch_path, recursive=False)
